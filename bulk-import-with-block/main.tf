@@ -14,12 +14,21 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
-variable "buckets" {
-  type        = list(string)
-  description = "buckets to import"
+resource "aws_s3_bucket" "test-1" {
+  bucket = "tf-bulk-import-test-1"
 }
 
-resource "aws_s3_bucket" "this" {
-  for_each = { for b in var.buckets : b => b }
-  bucket   = each.value
+resource "aws_s3_bucket" "test-2" {
+  bucket = "tf-bulk-import-test-2"
 }
+
+moved {
+  from = aws_s3_bucket.this["tf-bulk-import-test-1"]
+  to   = aws_s3_bucket.test-1
+}
+
+moved {
+  from = aws_s3_bucket.this["tf-bulk-import-test-2"]
+  to   = aws_s3_bucket.test-2
+}
+
