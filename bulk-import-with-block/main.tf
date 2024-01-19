@@ -18,10 +18,3 @@ resource "aws_s3_bucket" "test-1" {
   bucket = "tf-bulk-import-test-1"
 }
 
-resource "aws_s3_bucket" "test-2" {
-  bucket = "tf-bulk-import-test-2"
-  tags = {
-    "versioning" = "true"
-  }
-}
-
